@@ -1089,24 +1089,27 @@ textarea.f-control { resize: vertical; min-height: 118px; }
       <div class="form-card reveal d1">
         <h3>在线留言</h3>
         <p class="sub">填写以下信息，我们的顾问将在1个工作日内与您联系。</p>
-        <form id="contactForm" novalidate>
+        <form id="contactForm" action="https://formsubmit.co/712337933@qq.com" method="POST" novalidate>
+          <input type="hidden" name="_subject" value="言恒咨询官网留言">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
           <div class="form-row">
             <div class="f-group">
               <label for="name">您的姓名 <span class="req">*</span></label>
-              <input type="text" id="name" class="f-control" placeholder="请输入姓名" required>
+              <input type="text" id="name" name="name" class="f-control" placeholder="请输入姓名" required>
             </div>
             <div class="f-group">
               <label for="phone">联系电话 <span class="req">*</span></label>
-              <input type="tel" id="phone" class="f-control" placeholder="请输入手机号" required>
+              <input type="tel" id="phone" name="phone" class="f-control" placeholder="请输入手机号" required>
             </div>
           </div>
           <div class="f-group">
             <label for="company">公司名称</label>
-            <input type="text" id="company" class="f-control" placeholder="请输入公司名称（选填）">
+            <input type="text" id="company" name="company" class="f-control" placeholder="请输入公司名称（选填）">
           </div>
           <div class="f-group">
             <label for="service">咨询类型</label>
-            <select id="service" class="f-control">
+            <select id="service" name="service" class="f-control">
               <option value="">请选择咨询类型</option>
               <option value="代理记账">代理记账</option>
               <option value="税务筹划">税务筹划</option>
@@ -1119,7 +1122,7 @@ textarea.f-control { resize: vertical; min-height: 118px; }
           </div>
           <div class="f-group">
             <label for="message">留言内容 <span class="req">*</span></label>
-            <textarea id="message" class="f-control" placeholder="请简要描述您的需求" required></textarea>
+            <textarea id="message" name="message" class="f-control" placeholder="请简要描述您的需求" required></textarea>
           </div>
           <button type="submit" class="btn btn-gold f-submit">提交留言</button>
           <p class="f-tip">您的信息仅用于服务对接，我们将严格保密，不会泄露给第三方。</p>
@@ -1128,8 +1131,8 @@ textarea.f-control { resize: vertical; min-height: 118px; }
           <div class="ok">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
           </div>
-          <h4>提交成功！</h4>
-          <p>感谢您的留言，我们的顾问将在1个工作日内与您联系。<br>（演示提示：本站为静态演示站，留言未实际发送）</p>
+          <h4>留言已提交</h4>
+          <p>已收到您的留言，我们会尽快与您联系。</p>
         </div>
       </div>
     </div>
@@ -1270,20 +1273,18 @@ textarea.f-control { resize: vertical; min-height: 118px; }
     }
   }, { passive: true });
 
-  /* 表单提交（静态演示） */
+  /* 表单提交（接入 FormSubmit 免费邮件通知服务） */
   var form = document.getElementById('contactForm');
-  var successBox = document.getElementById('formSuccess');
   form.addEventListener('submit', function (e) {
-    e.preventDefault();
     var name = document.getElementById('name').value.trim();
     var phone = document.getElementById('phone').value.trim();
     var message = document.getElementById('message').value.trim();
     if (!name || !phone || !message) {
+      e.preventDefault();
       alert('请填写姓名、联系电话和留言内容（标 * 为必填项）');
       return;
     }
-    form.style.display = 'none';
-    successBox.style.display = 'block';
+    /* 校验通过后不阻止提交，由浏览器将表单数据 POST 到 FormSubmit，邮件通知公司邮箱 */
   });
 })();
 </script>
